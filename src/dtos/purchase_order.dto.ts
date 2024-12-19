@@ -47,6 +47,6 @@ export class SellStockDto {
   @IsString()
   public warehouseId: string;
 
-  @IsString()
+  @IsNumber()
   public quantityOrdered: number;
 }

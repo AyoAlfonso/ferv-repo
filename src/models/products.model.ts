@@ -3,7 +3,7 @@ import { IProduct as Product } from '@interfaces/products.interface';
 
 export type ProductCreationAttributes = Optional<Product, 'id' | 'createdAt' | 'updatedAt'>;
 
-export class ProductModel extends Model<ProductCreationAttributes, ProductCreationAttributes> implements Product {
+export class ProductModel extends Model<Product, ProductCreationAttributes> implements Product {
   public id!: string;
   public name!: string;
   public description?: string;
@@ -44,23 +44,6 @@ export default function (sequelize: Sequelize): typeof ProductModel {
           key: 'id',
         },
       },
-      // quantityInStock: {
-      // if we want to use virtual columns, we need to define the column in the model
-      //   type: DataTypes.VIRTUAL,
-      //   get: async function () {
-      //     const result: any = await sequelize.query(
-      //       `SELECT SUM(stockQuantity) as total
-      //        FROM product_warehouses
-      //        WHERE productId = :id`,
-      //       {
-      //         replacements: { productId: this.getDataValue('id') },
-      //         type: QueryTypes.SELECT,
-      //       },
-      //     );
-      //     console.log(result);
-      //     return result.length && result[0].total !== null ? result[0].total : 0;
-      //   },
-      // },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

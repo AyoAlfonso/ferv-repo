@@ -42,28 +42,20 @@ if (sequelize) {
     .then(() => {
       Product.hasMany(ProductWarehouse, { foreignKey: 'productId', as: 'warehouses' });
 
-      // ProductWarehouse belongs to Product
       ProductWarehouse.belongsTo(Product, { foreignKey: 'productId', as: 'product' });
 
       Warehouse.hasMany(ProductWarehouse, { foreignKey: 'warehouseId', as: 'productInventories' });
 
-      // ProductWarehouse belongs to Warehouse
       ProductWarehouse.belongsTo(Warehouse, { foreignKey: 'warehouseId', as: 'warehouse' });
 
-      // PurchaseOrder belongs to Product
       PurchaseOrder.belongsTo(Product, { foreignKey: 'productId', as: 'product' });
 
-      // PurchaseOrder belongs to Supplier
       PurchaseOrder.belongsTo(Supplier, { foreignKey: 'supplierId', as: 'supplier' });
 
-      // PurchaseOrder belongs to Warehouse
       PurchaseOrder.belongsTo(Warehouse, { foreignKey: 'warehouseId', as: 'warehouse' });
 
-      console.log(PurchaseOrder.associations, 'associations');
-      // Product has many ProductWarehouse
       Product.hasMany(ProductWarehouse, { foreignKey: 'productId', as: 'productInventories' });
 
-      // Product belongs to many Suppliers (many-to-many through product_suppliers)
       Product.belongsToMany(Supplier, {
         through: 'product_suppliers',
         foreignKey: 'productId',
@@ -71,7 +63,6 @@ if (sequelize) {
         as: 'suppliers',
       });
 
-      // Supplier belongs to many Products (many-to-many through product_suppliers)
       Supplier.belongsToMany(Product, {
         through: 'product_suppliers',
         foreignKey: 'supplierId',
@@ -79,6 +70,7 @@ if (sequelize) {
         as: 'products',
       });
 
+      console.log(Product.associations, ProductWarehouse.associations);
       console.log('Postgres Connection has been established successfully.');
       try {
       } catch (error) {

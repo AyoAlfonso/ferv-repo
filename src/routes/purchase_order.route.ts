@@ -17,6 +17,6 @@ export class PurchaseOrderRoute implements Routes {
     this.router.get(`${this.path}`, this.product_order.getProductOrders);
     this.router.get(`${this.path}/:id`, this.product_order.getProductOrder);
     this.router.post(`${this.path}`, ValidationMiddleware(CreatePurchaseOrderDto), this.product_order.create);
-    this.router.put(`${this.path}/:id/stock`, ValidationMiddleware(UpdatePurchaseStockDto, true), this.product_order.update);
+    this.router.patch(`${this.path}/:id/stock`, ValidationMiddleware(UpdatePurchaseStockDto, true), this.product_order.update);
   }
 }

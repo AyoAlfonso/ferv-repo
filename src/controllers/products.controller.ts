@@ -21,10 +21,11 @@ export class ProductController {
   public sell = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const productId = req.params.id;
-      const { warehouseId, quantityOrdered }: SellStockDto = req.body;
-      await this.product.updateStockLevels(productId, warehouseId, quantityOrdered);
 
-      res.status(200).json({ message: `Stock for product ${productId} adjusted successfully.` });
+      const { warehouseId, quantityOrdered }: SellStockDto = req.body;
+      const remainingstocks = await this.product.updateStockLevels(productId, warehouseId, quantityOrdered);
+
+      res.status(200).json({ message: `Product sold successfully. ${remainingstocks.stockQuantity} left in warehouse` });
     } catch (error) {
       next(error);
     }

@@ -5,7 +5,6 @@ export interface IProduct {
   name: string;
   description?: string;
   reorderThreshold: number;
-  // quantityInStock: number;
   defaultSupplierId: string;
 
   // warehouses?: IProductWarehouse[];

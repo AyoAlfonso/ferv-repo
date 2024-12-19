@@ -1,7 +1,10 @@
 import { IProduct as Project } from '@/interfaces/products.interface';
-import { Sequelize, DataTypes, Model } from 'sequelize';
+import { IProductWarehouse } from '@/interfaces/suppliers.interface';
+import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 
-export class ProductWarehouseModel extends Model {
+export type ProductWarehouseCreationAttributes = Optional<IProductWarehouse, 'id' | 'createdAt' | 'updatedAt'>;
+
+export class ProductWarehouseModel extends Model<IProductWarehouse, ProductWarehouseCreationAttributes> implements IProductWarehouse {
   public id!: string;
   public productId!: string;
 
@@ -10,6 +13,9 @@ export class ProductWarehouseModel extends Model {
   public lastUpdated!: Date;
 
   public product: Project;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 export default function (sequelize: Sequelize): typeof ProductWarehouseModel {

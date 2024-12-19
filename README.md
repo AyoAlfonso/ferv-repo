@@ -93,7 +93,8 @@ npm run dev
 ## 🌟 Features
 
 ### **Core Functionality**
-- **Inventory Tracking**: Monitor stock levels of products across multiple warehouses.
+
+- **Inventory Tracking**: Monitor stock levels of products across multiple warehouses using this cron "schedulePeriodicJobs" 
 - **Dynamic Reordering**:
   - Automatically create purchase orders when stock falls below the reorder threshold.
   - Integrates with a cron job to process updates at scheduled intervals.
@@ -102,11 +103,12 @@ npm run dev
 - **Stock Level Updates**:
   - Update stock levels manually or automatically upon order arrival.
 
-### **Performance Enhancements**
+### **Ideas For More Performance Enhancements**
 - **Caching**:
   - Cache read queries to improve response times for frequently accessed data.
 - **ACID Compliance**:
   - Transactions are implemented for critical database updates to ensure atomicity.
+
 
 ---
 
@@ -116,12 +118,7 @@ npm run dev
 | Method | Endpoint             | Description                   |
 |--------|----------------------|-------------------------------|
 | GET    | `/api/products`      | Fetch all products.           |
-| PUT    | `/api/products/:id`  | Update product stock levels.  |
-
-### **Suppliers**
-| Method | Endpoint             | Description                   |
-|--------|----------------------|-------------------------------|
-| GET    | `/api/suppliers`     | Fetch all suppliers.          |
+| PUT    | `/api/products/:id/sell`  | Sell product stock in a warehouse.  |
 
 ### **Purchase Orders**
 | Method | Endpoint                      | Description                               |
@@ -129,6 +126,7 @@ npm run dev
 | GET    | `/api/purchase-orders`        | Fetch all purchase orders.               |
 | POST   | `/api/purchase-orders`        | Create a new purchase order.             |
 | PUT    | `/api/purchase-orders/:id`    | Update purchase order status or details. |
+| PATCH  | `/api/purchase-orders/:id/stock`| Fufill purchase order and change status TO COMPLETE 
 
 ---
 
@@ -184,7 +182,7 @@ npm install
 ```
 
 ### **3. Configure the Database**
-- Create a PostgreSQL database and update the `config.json` file in `src/database/config/`:
+- Create a PostgreSQL database and update the `config.json` file in `src/database/config/`: or use the one I have provided in the env.development.local file
 
 ```json
 {

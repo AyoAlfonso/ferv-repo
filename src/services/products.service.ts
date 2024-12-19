@@ -31,20 +31,20 @@ export class ProductService {
 
   public async monitorStockLevelsAndReorder(): Promise<void> {
     const lowStockProducts = await ProductWarehouse.findAll({
-      // attributes: ['productId', 'warehouseId', 'stockQuantity'],
+      attributes: ['productId', 'warehouseId', 'stockQuantity'],
       include: [
         {
           model: Product,
-          // attributes: ['reorderThreshold'],
+          attributes: ['reorderThreshold'],
           as: 'product',
         },
       ],
       where: {
         stockQuantity: {
-          [Op.lt]: col('product.reorderThreshold'), // Compare stockQuantity to product.reorderThreshold
+          [Op.lt]: col('product.reorderThreshold'),
         },
       },
-      // logging: console.log, // Logs the SQL query
+      logging: console.log,
     });
 
     for (const product of lowStockProducts) {
@@ -122,8 +122,9 @@ export class ProductService {
       throw new Error(`Product ${productId} not found in warehouse ${warehouseId}`);
     }
 
-    productWarehouse.stockQuantity += quantity;
+    productWarehouse.stockQuantity -= quantity;
     await productWarehouse.save();
+
     return productWarehouse;
   }
 }

@@ -13,11 +13,15 @@ import { DB } from '@database';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
+import schedule from 'node-schedule';
+import { ProductService } from './services/products.service';
+import { Container } from 'typedi';
 
 export class App {
   public app: express.Application;
   public env: string;
   public port: string | number;
+  public product = Container.get(ProductService);
 
   constructor(routes: Routes[]) {
     this.app = express();
@@ -29,6 +33,22 @@ export class App {
     this.initializeRoutes(routes);
     this.initializeSwagger();
     this.initializeErrorHandling();
+    this.schedulePeriodicJobs();
+  }
+
+  /**
+   * Schedules periodic tasks using `node-schedule`.
+   */
+  private schedulePeriodicJobs(): void {
+    schedule.scheduleJob('monitorStockLevelsAndReorder', '*/5 * * * * *', async () => {
+      logger.info('Running monitorStockLevelsAndReorder');
+      try {
+        await this.product.monitorStockLevelsAndReorder();
+        logger.info('Cron job monitorStockLevelsAndReorder completed successfully.');
+      } catch (error) {
+        logger.error('Error running monitorStockLevelsAndReorder:', error);
+      }
+    });
   }
 
   public listen() {
@@ -45,7 +65,6 @@ export class App {
   }
 
   private async connectToDatabase() {
-    console.log(NODE_ENV, PORT);
     await DB.sequelize.sync({ force: false });
   }
 

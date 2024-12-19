@@ -7,25 +7,11 @@ import { UpdatePurchaseStockDto } from '@/dtos/purchase_order.dto';
 import { ProductService } from '@/services/products.service';
 import { HttpException } from '@/exceptions/HttpException';
 import { isEmpty } from '@/utils/util';
-import schedule from 'node-schedule';
 
 export class PurchaseOrderController {
   public product = Container.get(ProductService);
   public purchase_orders = Container.get(PurchaseOrderService);
 
-  constructor() {
-    this.schedulePeriodicJobs();
-  }
-
-  /**
-   * Schedules periodic tasks using `node-schedule`.
-   */
-  private schedulePeriodicJobs(): void {
-    schedule.scheduleJob('monitorStockLevelsAndReorder', '*/5 * * * * *', async () => {
-      console.warn('Running monitorStockLevelsAndReorder**');
-      await this.product.monitorStockLevelsAndReorder();
-    });
-  }
   public getProductOrders = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const findAllProductOrdersData: PurchaseOrder[] = await this.purchase_orders.fetchPurchaseOrders();

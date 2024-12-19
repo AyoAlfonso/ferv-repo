@@ -11,7 +11,6 @@ const ProductList: React.FC = () => {
     const fetchProducts = async () => {
       try {
           const response = await api.get('/product');
-          console.log(response.data.data);
         setProducts(response.data.data as Product[]);
       } catch (err) {
         console.error('Error fetching products:', err);

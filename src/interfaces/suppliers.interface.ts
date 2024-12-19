@@ -18,4 +18,6 @@ export interface IProductWarehouse {
   productId: string;
   warehouseId: string;
   stockQuantity: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
