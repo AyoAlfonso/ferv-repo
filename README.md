@@ -4,11 +4,36 @@
 
 ---
 
-## 🚀 Quick Start
 
-### **1. Install Dependencies for backend**
+---
+
+## 🔧 Setup Instructions
+
+### **1. Clone the Repository**
+```bash
+git clone https://github.com/AyoAlfonso/ferv-repo
+cd inventory-management
+```
+
+### **2. Install Dependencies for backend**
 ```bash
 npm install
+```
+
+### **3. Set Database Config**
+
+- Create a PostgreSQL database and update the `config.json` file in `src/database/config/`: or use the one I have provided in the env.development.local file
+
+```json
+{
+  "development": {
+    "username": "your_username",
+    "password": "your_password",
+    "database": "inventory_management",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
 ```
 
 ### **4. Run Database Migrations**
@@ -21,7 +46,8 @@ npx sequelize-cli db:migrate
 npx sequelize-cli db:seed:all
 ```
 
-### **2. Run the Server**
+
+### **6. Run the Server**
 
 You need nodemon for this to work
 
@@ -29,7 +55,7 @@ You need nodemon for this to work
 npm run dev 
 ```
 
-### **3. Run the Client**
+### **7. Run the Client**
 
 ```bash
 cd client
@@ -55,7 +81,6 @@ npm run dev
 
 ### **Key Packages**
 - **`express`**: Backend framework for building REST APIs.
-- **`jsonwebtoken`**: Secure authentication using JWT tokens.
 - **`pg`**: PostgreSQL integration.
 - **`sequelize`**: ORM for managing database models and migrations.
 - **`swagger-jsdoc`** & **`swagger-ui-express`**: For API documentation.
@@ -170,52 +195,6 @@ src/
     |-- utils/                 # Utility functions
     |-- middlewares/           # Express middlewares
 |-- interfaces/                # TypeScript interfaces for entities
-```
-
----
-
-## 🔧 Setup Instructions
-
-### **1. Clone the Repository**
-```bash
-git clone https://github.com/your-repository/inventory-management.git
-cd inventory-management
-```
-
-### **2. Install Dependencies**
-```bash
-npm install
-```
-
-### **3. Configure the Database**
-- Create a PostgreSQL database and update the `config.json` file in `src/database/config/`: or use the one I have provided in the env.development.local file
-
-```json
-{
-  "development": {
-    "username": "your_username",
-    "password": "your_password",
-    "database": "inventory_management",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
-  }
-}
-```
-
-### **4. Run Migrations and Seeders**
-```bash
-npx sequelize-cli db:migrate
-npx sequelize-cli db:seed:all
-```
-
-### **5. Start the Server**
-```bash
-npm run start
-```
-
-### **6. Start the Client**
-```bash
-npm run dev
 ```
 
 
