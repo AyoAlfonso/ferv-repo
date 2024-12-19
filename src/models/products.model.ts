@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model, Optional, QueryTypes } from 'sequelize';
-import { Product } from '@interfaces/products.interface';
+import { IProduct as Product } from '@interfaces/products.interface';
 
 export type ProductCreationAttributes = Optional<Product, 'id' | 'createdAt' | 'updatedAt'>;
 
@@ -8,7 +8,7 @@ export class ProductModel extends Model<ProductCreationAttributes, ProductCreati
   public name!: string;
   public description?: string;
   public reorderThreshold!: number;
-  public quantityInStock!: number;
+  // public quantityInStock!: number;
   public defaultSupplierId!: string;
 
   public readonly createdAt!: Date;

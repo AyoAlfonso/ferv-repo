@@ -10,8 +10,9 @@ const ProductList: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await api.get<Product[]>('/product');
-        setProducts(response.data);
+          const response = await api.get('/product');
+          console.log(response.data.data);
+        setProducts(response.data.data as Product[]);
       } catch (err) {
         console.error('Error fetching products:', err);
         setError('Failed to fetch products');
@@ -23,7 +24,8 @@ const ProductList: React.FC = () => {
 
   return (
     <div>
-      <h2>Products</h2>
+          <h2>Products</h2>
+          
       {error ? (
         <p style={{ color: 'red' }}>{error}</p>
       ) : (
@@ -35,12 +37,16 @@ const ProductList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map(product => (
-              <tr key={product.id}>
-                <td>{product.name}</td>
-                <td>{product.quantityInStock}</td>
-              </tr>
-            ))}
+            {products.map(product => {
+              // Calculate total stock quantity from all warehouses
+                 const totalStockQuantity = product.warehouses ? product.warehouses.reduce((total, warehouse) => total + warehouse.stockQuantity, 0) : 0;
+              return (
+                <tr key={product.id}>
+                  <td>{product.name}</td>
+                  <td>{totalStockQuantity}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       )}

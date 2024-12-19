@@ -1,3 +1,11 @@
+
+
+export interface IProductWarehouse {
+  id: string;
+  productId: string;
+  warehouseId: string;
+  stockQuantity: number;
+}
 export interface Product {
   id: string;
   name: string;
@@ -5,6 +13,7 @@ export interface Product {
   reorderThreshold: number;
   quantityInStock: number;
   defaultSupplierId: string;
+  warehouses?: IProductWarehouse[];
 
   createdAt?: Date;
   updatedAt?: Date;

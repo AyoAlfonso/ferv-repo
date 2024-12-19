@@ -59,6 +59,7 @@ if (sequelize) {
       // PurchaseOrder belongs to Warehouse
       PurchaseOrder.belongsTo(Warehouse, { foreignKey: 'warehouseId', as: 'warehouse' });
 
+      console.log(PurchaseOrder.associations, 'associations');
       // Product has many ProductWarehouse
       Product.hasMany(ProductWarehouse, { foreignKey: 'productId', as: 'productInventories' });
 

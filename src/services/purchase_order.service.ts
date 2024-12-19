@@ -5,12 +5,13 @@ import { HttpException } from '@/exceptions/HttpException';
 import { PurchaseOrder } from '@interfaces/purchase_orders.interface';
 import { ProductWarehouseModel } from '@models/product_warehouses.model';
 import { Sequelize } from 'sequelize';
-import { ProductModel } from '@/models/products.model';
-import { ProductSupplierModel } from '@/models/product_suppliers.model';
+import { ProductModel as Product } from '@/models/products.model';
+// import { ProductSupplierModel } from '@/models/product_suppliers.model';
 import { PurchaseOrderModel } from '@/models/purchase_orders.model';
-import { WarehouseModel } from '@/models/warehouses.model';
+import { WarehouseModel as Warehouse } from '@/models/warehouses.model';
 import { isEmpty } from '@utils/util';
 import { IProductWarehouse } from '@/interfaces/suppliers.interface';
+import { SupplierModel as Supplier } from '@/models/suppliers.model';
 
 @Service()
 export class PurchaseOrderService {
@@ -38,9 +39,9 @@ export class PurchaseOrderService {
   public async fetchPurchaseOrders(): Promise<any[]> {
     return await PurchaseOrderModel.findAll({
       include: [
-        { model: ProductModel, as: 'product' },
-        { model: ProductSupplierModel, as: 'supplier' },
-        { model: ProductWarehouseModel, as: 'warehouse' },
+        { model: Product, as: 'product' },
+        { model: Supplier, as: 'supplier' },
+        { model: Warehouse, as: 'warehouse' },
       ],
     });
   }
@@ -51,12 +52,12 @@ export class PurchaseOrderService {
   public async create(data: CreatePurchaseOrderDto): Promise<any> {
     const { productId, supplierId, warehouseId, quantityOrdered } = data;
 
-    const product = await ProductModel.findByPk(productId);
+    const product = await Product.findByPk(productId);
     if (!product) {
       throw new Error(`Product with ID ${productId} not found.`);
     }
 
-    const warehouse = await ProductWarehouseModel.findByPk(warehouseId);
+    const warehouse = await Warehouse.findByPk(warehouseId);
     if (!warehouse) {
       throw new Error(`Warehouse with ID ${warehouseId} not found.`);
     }

@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsNotEmpty, MinLength, MaxLength } from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty, MinLength, MaxLength, IsNumber } from 'class-validator';
 export type OrderStatus = 'PENDING' | 'COMPLETED';
 
 export class CreatePurchaseOrderDto {
@@ -14,7 +14,7 @@ export class CreatePurchaseOrderDto {
   @IsNotEmpty()
   public warehouseId: string;
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
   public quantityOrdered: number;
 
@@ -39,7 +39,7 @@ export class UpdatePurchaseStockDto {
   @IsString()
   public warehouseId: string;
 
-  @IsString()
+  @IsNumber()
   public quantityOrdered: number;
 }
 

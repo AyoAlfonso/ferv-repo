@@ -1,4 +1,4 @@
-import { Product } from '@/interfaces/products.interface';
+import { IProduct as Project } from '@/interfaces/products.interface';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 
 export class ProductWarehouseModel extends Model {
@@ -9,7 +9,7 @@ export class ProductWarehouseModel extends Model {
   public stockQuantity!: number;
   public lastUpdated!: Date;
 
-  public product: Product;
+  public product: Project;
 }
 
 export default function (sequelize: Sequelize): typeof ProductWarehouseModel {
